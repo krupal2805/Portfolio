@@ -36,7 +36,7 @@ This guide will help you deploy your portfolio website to production. The projec
    - Import your repository
    - Set environment variables:
      ```
-     REACT_APP_API_URL=https://your-backend-url.herokuapp.com
+     REACT_APP_API_URL=https://portfolio-kpxk.onrender.com
      ```
    - Deploy!
 
@@ -94,7 +94,7 @@ This guide will help you deploy your portfolio website to production. The projec
 
 ### Frontend (.env)
 ```
-REACT_APP_API_URL=https://your-backend-url.herokuapp.com
+REACT_APP_API_URL=https://portfolio-kpxk.onrender.com
 ```
 
 ### Backend (Heroku/Railway)
