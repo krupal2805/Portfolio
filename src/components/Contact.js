@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { EnvelopeIcon, PhoneIcon, MapPinIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { EnvelopeIcon, MapPinIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { useTheme } from '../context/ThemeContext';
 
 const Contact = () => {
@@ -43,7 +43,7 @@ const Contact = () => {
       } else {
         // Validation errors or other errors
         if (result.errors) {
-          const errorMessages = result.errors.map(error => `${error.field}: ${error.message}`).join('\n');
+          const errorMessages = result.errors.map(error => `${error.path}: ${error.msg}`).join('\n');
           alert(`Please fix the following errors:\n${errorMessages}`);
         } else {
           alert(result.message || 'Failed to send message. Please try again.');
