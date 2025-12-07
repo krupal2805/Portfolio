@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { AcademicCapIcon, CodeBracketIcon, LightBulbIcon } from '@heroicons/react/24/outline';
-import { bottom } from '@popperjs/core';
 
 const About = () => {
   const containerVariants = {
