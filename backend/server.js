@@ -3,7 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
-const nodemailer = require('nodemailer');
+const {Resend} = require('resend');
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +18,7 @@ app.use(cors({
   credentials: true
 }));
 
+app.set('trust proxy', 1);
 // Security middleware
 app.use(helmet());
 
@@ -38,15 +39,15 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Email transporter configuration
-const createTransporter = () => {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS // Use App Password for Gmail
-    }
-  });
-};
+// const createTransporter = () => {
+//   return nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: process.env.EMAIL_USER,
+//       pass: process.env.EMAIL_PASS // Use App Password for Gmail
+//     }
+//   });
+// };
 
 // Validation middleware
 const contactValidation = [
@@ -89,13 +90,12 @@ app.post('/api/contact', contactValidation, async (req, res) => {
     const { name, email, subject, message } = req.body;
 
     // Create email transporter
-    const transporter = createTransporter();
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     // Email content
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER, // Send to yourself
-      replyTo: email,
+      to: 'krupalsiddhapura@gmail.com', // Send to yourself
       subject: `Portfolio Contact: ${subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -137,7 +137,8 @@ app.post('/api/contact', contactValidation, async (req, res) => {
     };
 
     // Send email
-    await transporter.sendMail(mailOptions);
+    await resend.emails.send(mailOptions);
+
 
     // Send confirmation email to the user
     const confirmationMailOptions = {
@@ -201,7 +202,7 @@ app.post('/api/contact', contactValidation, async (req, res) => {
     };
 
     // Send confirmation email
-    await transporter.sendMail(confirmationMailOptions);
+    await resend.emails.send(confirmationMailOptions);
 
     res.status(200).json({
       success: true,

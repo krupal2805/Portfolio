@@ -26,7 +26,6 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      console.log("Hello");
       const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/contact`, {
         method: 'POST',
         headers: {
@@ -35,7 +34,6 @@ const Contact = () => {
         body: JSON.stringify(formData)
       });
 
-      console.log("wORLD");
       const result = await response.json();
 
       if (result.success) {
