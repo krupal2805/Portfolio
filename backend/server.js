@@ -49,6 +49,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 //   });
 // };
 
+
 // Validation middleware
 const contactValidation = [
   body('name')
@@ -117,7 +118,7 @@ app.post('/api/contact', contactValidation, async (req, res) => {
           
           <div style="margin-top: 30px; padding: 15px; background-color: #f1f5f9; border-radius: 8px; font-size: 14px; color: #64748b;">
             <p><strong>Sent from:</strong> Your Portfolio Website</p>
-            <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
+            <p><strong>Timestamp:</strong> ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
           </div>
         </div>
       `,
@@ -132,12 +133,14 @@ app.post('/api/contact', contactValidation, async (req, res) => {
         ${message}
         
         Sent from: Your Portfolio Website
-        Timestamp: ${new Date().toLocaleString()}
+        Timestamp: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
       `
     };
 
     // Send email
-    await resend.emails.send(mailOptions);
+    const { data, error } = await resend.emails.send(mailOptions);
+
+    console.log('Admin email result -> data:', data, 'error:', error);
 
 
     // Send confirmation email to the user
