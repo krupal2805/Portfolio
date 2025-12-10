@@ -9,6 +9,7 @@ import Projects from './components/Projects';
 import CodingProfiles from './components/CodingProfiles';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Router>
         <div className="min-vh-100">
           <Navbar />
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
